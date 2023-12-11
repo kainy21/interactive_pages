@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>rotate,transition</title>
+    <style>
+      h1 {
+        font-size: 50px;
+        font-weight: bold;
+      }
+      button {
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .arrowWrap {
+        margin: 30px;
+      }
+      .arrowImg {
+        width: 300px;
+        /* transition: all 0.2s ease-in-out; */
+        transition: all 2s cubic-bezier(0.075, 0.82, 0.165, 1);
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        const resetBtn = document.querySelector(".resetBtn");
+        const rotateBtn = document.querySelector(".rotateBtn");
+        const h1 = document.getElementsByTagName("h1")[0];
+        const arrow = document.querySelector(".arrowImg");
+
+        resetBtn.addEventListener("click", function () {
+          h1.innerHTML = `0 deg`;
+          arrow.style.transform = `rotate(0deg)`;
+        });
+        rotateBtn.addEventListener("click", function () {
+          let rotateDegrees = Math.round(Math.random() * 360);
+          h1.innerHTML = `${rotateDegrees} deg`;
+
+          arrow.style.transform = `rotate(${rotateDegrees}deg)`;
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <button class="resetBtn">reset</button>
+    <button class="rotateBtn">rotate</button>
+    <div class="arrowWrap">
+      <h1>0 deg</h1>
+      <img class="arrowImg" src="/imgs/arrow.png" />
+    </div>
+  </body>
+</html>

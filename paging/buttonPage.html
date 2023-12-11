@@ -8,7 +8,7 @@
     <style>
       body {
         transition: background 1.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-        overflow: hidden;
+        overflow-x: hidden;
       }
       div {
         margin: 0;
@@ -54,8 +54,11 @@
           } else {
             page = totalPage;
           }
-          colorChange();
-          //   text.innerHTML = `page : ${page}`;
+          pageChange();
+          window.scrollTo({
+            top: section[page - 1].offsetTop,
+            behavior: "smooth",
+          });
         });
         nextBtn.addEventListener("click", function () {
           if (totalPage > page) {
@@ -63,21 +66,52 @@
           } else {
             page = 1;
           }
-          colorChange();
-          //   text.innerHTML = `page : ${page}`;
-        });
-
-        const colorChange = () => {
-          text.innerHTML = `page : ${page}`;
-          document.getElementsByTagName("body")[0].style.background =
-            colors[page - 1];
           window.scrollTo({
             top: section[page - 1].offsetTop,
             behavior: "smooth",
           });
+        });
+
+        const pageChange = () => {
+          text.innerHTML = `page : ${page}`;
+          document.getElementsByTagName("body")[0].style.background =
+            colors[page - 1];
+          // 페이지 이동
+          //   window.scrollTo({
+          //     top: section[page - 1].offsetTop,
+          //     behavior: "smooth",
+          //   });
         };
 
-        colorChange();
+        pageChange();
+
+        window.addEventListener("scroll", (event) => {
+          let scroll = this.scrollY;
+          console.log(scroll);
+
+          for (let i = 0; i < totalPage; i++) {
+            //   section top이 window 0에 닿으면 페이지 바뀜
+            //       if (
+            //         scroll > section[i].offsetTop &&
+            //         scroll < section[i].offsetTop + section[i].offsetHeight
+            //       ) {
+            //         page = i + 1;
+            //         break;
+            //       }
+            if (
+              scroll > section[i].offsetTop - window.outerHeight / 3 &&
+              scroll <
+                section[i].offsetTop -
+                  window.outerHeight / 3 +
+                  section[i].offsetHeight
+            ) {
+              page = i + 1;
+              break;
+            }
+          }
+
+          pageChange();
+        });
       };
     </script>
   </head>
